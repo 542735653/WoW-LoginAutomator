@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Magic;
 
-namespace WoW_LoginAutomator
+namespace WoWLoginAutomator
 {
-    class Program
+    public class LoginAutomator
     {
         // - Imports for the SendMessage Windows interactions
         [DllImport("user32.dll")]
@@ -35,7 +32,7 @@ namespace WoW_LoginAutomator
                 DoLogin(Convert.ToInt32(args[0]), Convert.ToInt32(args[1]), args[2], args[3]);
         }
 
-        private static void DoLogin(int pid, int characterSlot, string username, string password)
+        public static void DoLogin(int pid, int characterSlot, string username, string password)
         {
             Process wow = GetWoWbyPID(pid);
             BlackMagic blackMagic = new BlackMagic(wow.Id);

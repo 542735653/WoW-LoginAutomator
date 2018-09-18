@@ -32,6 +32,7 @@ namespace WoWLoginAutomator
             while (blackMagic.ReadInt(worldLoaded) != 1)
             {
                 if (blackMagic.ReadInt(worldLoaded) != 1)
+                {
                     switch (blackMagic.ReadASCIIString(gameState, 10))
                     {
                         case "login":
@@ -45,6 +46,8 @@ namespace WoWLoginAutomator
                         default:
                             break;
                     }
+                }
+
                 Thread.Sleep(2000);
             }
             Console.WriteLine("Logged in");
@@ -64,8 +67,12 @@ namespace WoWLoginAutomator
             List<Process> processList = new List<Process>(Process.GetProcessesByName("Wow"));
 
             foreach (Process p in processList)
+            {
                 if (p.Id == pid)
+                {
                     return p;
+                }
+            }
 
             return processList[0];
         }
@@ -91,7 +98,7 @@ namespace WoWLoginAutomator
             Console.Write("Username Sending: ");
             foreach (char c in username)
             {
-                SendKeyToProcess(wow, c, Char.IsUpper(c));
+                SendKeyToProcess(wow, c, char.IsUpper(c));
                 Console.Write(c);
                 Thread.Sleep(10);
             }
@@ -111,7 +118,7 @@ namespace WoWLoginAutomator
                 Console.WriteLine("Writing Password: ");
                 foreach (char c in password)
                 {
-                    SendKeyToProcess(wow, c, Char.IsUpper(c));
+                    SendKeyToProcess(wow, c, char.IsUpper(c));
                     Console.Write("*");
                     Thread.Sleep(10);
                 }
@@ -126,12 +133,17 @@ namespace WoWLoginAutomator
 
         private static void Main(string[] args)
         {
-            Console.Title = "Logging into: " + args[2];
-
+            Console.Title = "Logging into: ACCOUNTNAME";
             if (args.Length < 4)
+            {
                 Console.WriteLine("Error: to few arguments... Use it like this: ./WoW-LoginAutomator.exe ..PID.. ..CHARACTERSLOT.. ..USERNAME.. ..PASSWORD..");
+                Console.ReadKey();
+            }
             else
+            {
+                Console.Title = "Logging into: " + args[2];
                 DoLogin(Convert.ToInt32(args[0]), Convert.ToInt32(args[1]), args[2], args[3]);
+            }
         }
 
         private static void SendKeyToProcess(Process process, int c)
@@ -148,12 +160,16 @@ namespace WoWLoginAutomator
             IntPtr windowHandle = process.MainWindowHandle;
 
             if (shift)
+            {
                 PostMessage(windowHandle, KEYDOWN, new IntPtr(0x10), new IntPtr(0));
+            }
 
             PostMessage(windowHandle, WM_CHAR, new IntPtr(c), new IntPtr(0));
 
             if (shift)
+            {
                 PostMessage(windowHandle, KEYUP, new IntPtr(0x10), new IntPtr(0));
+            }
         }
     }
 }

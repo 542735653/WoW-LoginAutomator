@@ -136,7 +136,7 @@ namespace WoWLoginAutomator
             Console.Title = "Logging into: ACCOUNTNAME";
             if (args.Length < 4)
             {
-                Console.WriteLine("Error: to few arguments... Use it like this: ./WoW-LoginAutomator.exe ..PID.. ..CHARACTERSLOT.. ..USERNAME.. ..PASSWORD..");
+                Console.WriteLine("Error: to few arguments... Use it like this: ./WoWLoginAutomator.exe ..ProcessID.. ..CHARACTERSLOT.. ..USERNAME.. ..PASSWORD..");
                 Console.ReadKey();
             }
             else
